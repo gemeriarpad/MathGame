@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <!-- 'How to play' cím -->
+    <LinearLayout
+        android:id="@+id/gra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textHowToPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="How to play"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textHowToPlay"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Solve the math operations as fast as possible., before the time runs out."
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Pár sor szöveg -->
+
+    <!-- Két oszlop matematikai példákkal -->
+    <GridLayout
+        android:id="@+id/gridLayoutMathExamples"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textDescription"
+        android:layout_marginTop="16dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:rowCount="3">
+
+        <!-- Matematikai példa 1 -->
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="3 + 3 = 6"
+            android:textSize="16sp" />
+
+        <!-- Matematikai példa 2 -->
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="4 + 2 = 6"
+            android:textSize="16sp" />
+
+        <!-- Matematikai példa 3 -->
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="5 + 1 = 6"
+            android:textSize="16sp" />
+
+        <!-- Matematikai példa 4 -->
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="6 - 0 = 6"
+            android:textSize="16sp" />
+
+        <!-- Matematikai példa 5 -->
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="9 / 3 = 3"
+            android:textSize="16sp" />
+
+        <!-- Matematikai példa 6 -->
+        <TextView
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:padding="8dp"
+            android:text="8 - 2 = 6"
+            android:textSize="16sp" />
+    </GridLayout>
+
+    <!-- Vissza a menübe gomb -->
+    <Button
+        android:id="@+id/buttonBackToMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gridLayoutMathExamples"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Back to Menu" />
+</LinearLayout>
