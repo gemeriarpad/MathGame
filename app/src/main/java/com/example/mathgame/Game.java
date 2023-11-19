@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,38 +17,43 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
-
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
-
 public class Game extends AppCompatActivity {
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer backgroundMusic, buttonClickSound, correctAnswer, incorrectAnswer;
     private static final long COUNTDOWN_TIME = 4000;
     private long REMAINING_TIME = 10000;
 
     private Handler remainingTimer;
-
     private CountDownTimer countDownTimer;
     private TextView countdownTextView, currentTaskTextView, currentTaskResultTextView, scoreTextView, solvedTasks, nextTaskTextView, levelCounterTextView, remainingTimeValue;
     private SpannableStringBuilder solvedTasksText = new SpannableStringBuilder();
 
-    private int result;
+    private int result, currentTaskId, currentLevel = 1;
     private HashMap<Integer, int[]> nextTasks = new HashMap<>();
 
-    private int currentTaskId;
-    private int currentLevel = 1;
+    Button Clear,stopMenu,muteSound,muteMusic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Button Clear = findViewById(R.id.numC);
 
-        Button stopMenu = findViewById(R.id.stopGameButton);
-        Button muteSound = findViewById(R.id.muteSoundButton);
-        Button muteMusic = findViewById(R.id.muteMusicButton);
+        stopMenu = findViewById(R.id.stopGameButton);
+        muteSound = findViewById(R.id.muteSoundButton);
+        muteMusic = findViewById(R.id.muteMusicButton);
+
+        //music
+        backgroundMusic = MediaPlayer.create(this, R.raw.backgronudmusic);
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.5f, 0.5f);
+
+        //sounds
+        buttonClickSound = MediaPlayer.create(this, R.raw.buttonclick);
+        correctAnswer = MediaPlayer.create(this, R.raw.correctanswer);
+        incorrectAnswer = MediaPlayer.create(this, R.raw.incorrectanswer);
+        checkMusicAndSounds();
+
+         Clear = findViewById(R.id.numC);
 
         countdownTextView = findViewById(R.id.countdownTextView);
         startCountdown();
@@ -62,10 +66,6 @@ public class Game extends AppCompatActivity {
         levelCounterTextView = findViewById(R.id.levelCounterTextView);
         remainingTimeValue = findViewById(R.id.remainingTimeValue);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.backgronudmusic);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(0.5f, 0.5f);
-        mediaPlayer.start();
         levelCounterTextView.setText(Integer.toString(currentLevel));
 
         for (int i = 0; i <= 9; i++) {
@@ -76,12 +76,15 @@ public class Game extends AppCompatActivity {
                 public void onClick(View v) {
                     if(countdownTextView.getText() == "") {
                         onNumberButtonClick(((Button) v).getText().toString());
+                    }else{
+                        buttonClickSound.start();
                     }
                 }
             });
             Clear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    buttonClickSound.start();
                    currentTaskResultTextView.setText("");
                 }
             });
@@ -90,19 +93,22 @@ public class Game extends AppCompatActivity {
         muteMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mediaPlayer.isPlaying()){
-                    mediaPlayer.pause();
-                    muteMusic.setText("Music OFF");
-                }else{
-                    mediaPlayer.start();
-                    muteMusic.setText("Music ON");
-                }
+                global.music = !global.music;
+                checkMusicAndSounds();
+            }
+        });
+        muteSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                global.sounds = !global.sounds;
+                checkMusicAndSounds();
             }
         });
     }
 
     private void onNumberButtonClick(String number) {
         currentTaskResultTextView.append(number);
+        buttonClickSound.start();
         if(Integer.toString(result).length() == currentTaskResultTextView.getText().length()){
             if (result == Integer.parseInt(currentTaskResultTextView.getText().toString())) {
                 //Correct answer
@@ -110,6 +116,7 @@ public class Game extends AppCompatActivity {
                 solvedTasksText.append("\n" + currentTaskTextView.getText() + currentTaskResultTextView.getText());
                 setSpannableTextColor(solvedTasksText, Color.argb(255, 0, 255, 0));
                 REMAINING_TIME += 1000;
+                correctAnswer.start();
 
                 currentTaskId++;
                 nextTask();
@@ -119,6 +126,7 @@ public class Game extends AppCompatActivity {
                 solvedTasksText.append("\n" + currentTaskTextView.getText() + currentTaskResultTextView.getText());
                 setSpannableTextColor(solvedTasksText, Color.argb(255, 255, 0, 0));
                 REMAINING_TIME -= 500;
+                incorrectAnswer.start();
 
                 currentTaskId++;
                 nextTask();
@@ -176,6 +184,7 @@ public class Game extends AppCompatActivity {
     }
 
     private void generateTasks(int count){
+        REMAINING_TIME = 10000;
         for(int i = 0; i < count; i++){
             int firstNumber = generateRandomNumber(1,10);
             int secondNumber = generateRandomNumber(1,10);
@@ -236,5 +245,29 @@ public class Game extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void checkMusicAndSounds(){
+        if(global.sounds){
+            buttonClickSound.setVolume(0.5f,0.5f);
+            correctAnswer.setVolume(0.5f,0.5f);
+            incorrectAnswer.setVolume(0.5f,0.5f);
+            muteSound.setText("Sounds ON");
+        }else{
+            buttonClickSound.setVolume(0f,0f);
+            correctAnswer.setVolume(0f,0f);
+            incorrectAnswer.setVolume(0f,0f);
+            muteSound.setText("Sounds OFF");
+        }
+
+        if(global.music){
+            if(!backgroundMusic.isPlaying()) {
+                backgroundMusic.start();
+            }
+            muteMusic.setText("Music ON");
+        }else{
+            backgroundMusic.pause();
+            muteMusic.setText("Music OFF");
+        }
     }
 }

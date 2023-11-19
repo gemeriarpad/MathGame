@@ -3,9 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/mainmenubackground"
     android:gravity="right|center_vertical"
-    android:orientation="vertical"
-    tools:context=".StartMenu">
+    android:orientation="horizontal"
+
+    tools:context=".StartMenu"><![CDATA[
+    >
+
+    ]]>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,12 +19,14 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onButton1Click"
-            android:text="Start" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onButton1Click"
+                android:text="Start"
+                android:soundEffectsEnabled="false" />
 
         <Button
             android:id="@+id/button2"
@@ -28,8 +35,8 @@
             android:layout_below="@id/button1"
             android:layout_marginTop="16dp"
             android:onClick="onButton2Click"
+            android:soundEffectsEnabled="false"
             android:text="Help" />
-
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
@@ -37,6 +44,7 @@
             android:layout_below="@id/button2"
             android:layout_marginTop="16dp"
             android:onClick="onButton3Click"
+            android:soundEffectsEnabled="false"
             android:text="High Scores" />
 
         <Button
@@ -46,7 +54,32 @@
             android:layout_below="@id/button3"
             android:layout_marginTop="16dp"
             android:onClick="onButton4Click"
+            android:soundEffectsEnabled="false"
             android:text="More Games" />
+
+        <LinearLayout
+            android:id="@+id/bottomRightLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topRightLayout"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/muteSoundButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:soundEffectsEnabled="false"
+                android:text="Mute Sound" />
+
+            <Button
+                android:id="@+id/muteMusicButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:soundEffectsEnabled="false"
+                android:text="Music ON" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

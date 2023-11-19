@@ -105,5 +105,6 @@
         android:layout_below="@id/gridLayoutMathExamples"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Back to Menu" />
+        android:text="Back to Menu"
+        android:soundEffectsEnabled="false"/>
 </LinearLayout>
