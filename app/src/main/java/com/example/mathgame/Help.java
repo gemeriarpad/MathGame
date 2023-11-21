@@ -1,27 +1,25 @@
 package com.example.mathgame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 public class Help extends AppCompatActivity {
 
+    private MediaPlayer buttonClickSound;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         Button backButton = findViewById(R.id.buttonBackToMenu);
-
+        buttonClickSound = MediaPlayer.create(this, R.raw.buttonclick);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Help.this, StartMenu.class);
-                startActivity(intent);
+                buttonClickSound.start();
+                finish();
             }
         });
     }

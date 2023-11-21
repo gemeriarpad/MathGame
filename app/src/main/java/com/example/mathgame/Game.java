@@ -9,13 +9,18 @@ import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -32,6 +37,7 @@ public class Game extends AppCompatActivity {
     private int result, currentTaskId, currentLevel = 1;
     private HashMap<Integer, int[]> nextTasks = new HashMap<>();
 
+    DatabaseReference HighScoreDB;
     Button Clear,stopMenu,muteSound,muteMusic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +179,7 @@ public class Game extends AppCompatActivity {
                     remainingTimer.removeCallbacks(this);
                     remainingTimeValue.setText("0");
                     showHighscoreDialog();
+
                 }
             }
         }, 0);
@@ -236,10 +243,30 @@ public class Game extends AppCompatActivity {
 
     private void showHighscoreDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Highscore");
-        builder.setMessage("A jelenlegi highscore: " + scoreTextView.getText());
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setTitle("A jelenlegi highscore: " + scoreTextView.getText());
+//        builder.setMessage();
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_input, null);
+
+        EditText editText = dialogView.findViewById(R.id.editText);
+
+        builder.setView(dialogView);
+        builder.setPositiveButton("Submit my score", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+//                Write to database
+                if(editText.getText().toString().length() != 0) {
+                    HighScoreDB = FirebaseDatabase.getInstance().getReference("highscores");
+                    highscore newScore = new highscore(editText.getText().toString(), Integer.parseInt(scoreTextView.getText().toString()));
+                    String userId = HighScoreDB.push().getKey();
+                    HighScoreDB.child(userId).setValue(newScore);
+                }
+                dialog.dismiss();
+            }
+
+        });
+        builder.setNegativeButton("Try again...", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
                 dialog.dismiss();
             }
         });
