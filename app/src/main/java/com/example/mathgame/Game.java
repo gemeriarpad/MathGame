@@ -1,5 +1,7 @@
 package com.example.mathgame;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -9,6 +11,7 @@ import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +42,7 @@ public class Game extends AppCompatActivity {
 
     DatabaseReference HighScoreDB;
     Button Clear,stopMenu,muteSound,muteMusic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +116,14 @@ public class Game extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        buttonClickSound.start();
+        finish();
+        overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
+        super.onBackPressed();
+    }
+
     private void onNumberButtonClick(String number) {
         currentTaskResultTextView.append(number);
         buttonClickSound.start();
@@ -170,7 +182,7 @@ public class Game extends AppCompatActivity {
             public void run() {
                 long secondsRemaining = REMAINING_TIME / 1000;
                 long milisecondsRemaining = REMAINING_TIME % 1000;
-                remainingTimeValue.setText(String.valueOf(secondsRemaining) + "."+String.valueOf(milisecondsRemaining));
+                remainingTimeValue.setText(String.valueOf(secondsRemaining) + "."+String.valueOf(milisecondsRemaining / 100));
                 remainingTimer.postDelayed(this, 100);
                 REMAINING_TIME -= 100;
 
@@ -179,7 +191,6 @@ public class Game extends AppCompatActivity {
                     remainingTimer.removeCallbacks(this);
                     remainingTimeValue.setText("0");
                     showHighscoreDialog();
-
                 }
             }
         }, 0);
@@ -243,7 +254,7 @@ public class Game extends AppCompatActivity {
 
     private void showHighscoreDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("A jelenlegi highscore: " + scoreTextView.getText());
+        builder.setTitle("Your gained score: " + scoreTextView.getText());
 //        builder.setMessage();
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_input, null);
@@ -253,12 +264,18 @@ public class Game extends AppCompatActivity {
         builder.setView(dialogView);
         builder.setPositiveButton("Submit my score", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                Log.d(TAG,editText.getText().toString());
 //                Write to database
                 if(editText.getText().toString().length() != 0) {
                     HighScoreDB = FirebaseDatabase.getInstance().getReference("highscores");
                     highscore newScore = new highscore(editText.getText().toString(), Integer.parseInt(scoreTextView.getText().toString()));
                     String userId = HighScoreDB.push().getKey();
                     HighScoreDB.child(userId).setValue(newScore);
+                    buttonClickSound.start();
+                    finish();
+                    overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
+                }else{
+                    Toast.makeText(Game.this, "U didnt entered your name...", Toast.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
             }
@@ -271,6 +288,13 @@ public class Game extends AppCompatActivity {
             }
         });
         AlertDialog dialog = builder.create();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                resetLeftLayout();
+            }
+        });
+
         dialog.show();
     }
 
@@ -296,5 +320,16 @@ public class Game extends AppCompatActivity {
             backgroundMusic.pause();
             muteMusic.setText("Music OFF");
         }
+    }
+    private void resetLeftLayout(){
+        currentLevel = 1;
+        levelCounterTextView.setText(Integer.toString(currentLevel));
+        scoreTextView.setText("0");
+        currentTaskTextView.setText("");
+        currentTaskResultTextView.setText("");
+        solvedTasksText.clear();
+        solvedTasks.setText("");
+        nextTaskTextView.setText("");
+        startCountdown();
     }
 }

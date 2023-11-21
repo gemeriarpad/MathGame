@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:fontFamily="@font/minecraft_font"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="How to play"
@@ -26,6 +27,7 @@
         <TextView
             android:id="@+id/textDescription"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/minecraft_font"
             android:layout_height="wrap_content"
             android:layout_below="@id/textHowToPlay"
             android:layout_centerHorizontal="true"
@@ -53,6 +55,7 @@
             android:layout_columnWeight="1"
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
+            android:fontFamily="@font/minecraft_font"
             android:text="3 + 3 = 6"
             android:textSize="16sp" />
 
@@ -62,6 +65,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
             android:text="4 + 2 = 6"
+            android:fontFamily="@font/minecraft_font"
             android:textSize="16sp" />
 
         <!-- Matematikai példa 3 -->
@@ -69,6 +73,7 @@
             android:layout_columnWeight="1"
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
+            android:fontFamily="@font/minecraft_font"
             android:text="5 + 1 = 6"
             android:textSize="16sp" />
 
@@ -78,6 +83,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
             android:text="6 - 0 = 6"
+            android:fontFamily="@font/minecraft_font"
             android:textSize="16sp" />
 
         <!-- Matematikai példa 5 -->
@@ -86,6 +92,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
             android:text="9 / 3 = 3"
+            android:fontFamily="@font/minecraft_font"
             android:textSize="16sp" />
 
         <!-- Matematikai példa 6 -->
@@ -94,11 +101,13 @@
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
             android:text="8 - 2 = 6"
+            android:fontFamily="@font/minecraft_font"
             android:textSize="16sp" />
     </GridLayout>
 
     <!-- Vissza a menübe gomb -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:fontFamily="@font/minecraft_font"
         android:id="@+id/buttonBackToMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

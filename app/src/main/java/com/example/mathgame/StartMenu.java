@@ -17,7 +17,7 @@ public class StartMenu extends AppCompatActivity {
 
         backgroundMusic = MediaPlayer.create(this, R.raw.backgronudmusic);
         backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0.5f, 0.5f);
+        backgroundMusic.setVolume(0.9f, 0.9f);
         buttonClickSound = MediaPlayer.create(this, R.raw.buttonclick);
 
         muteSound = findViewById(R.id.muteSoundButton);
@@ -42,11 +42,17 @@ public class StartMenu extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        buttonClickSound.start();
+        System.exit(0);
+        super.onBackPressed();
+    }
     // start
     public void onButton1Click(View view) {
         Intent intent = new Intent(this, Game.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
         buttonClickSound.start();
         backgroundMusic.pause();
     }
@@ -55,12 +61,14 @@ public class StartMenu extends AppCompatActivity {
     public void onButton2Click(View view) {
         Intent intent = new Intent(this, Help.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
         buttonClickSound.start();
     }
 
     public void onButton3Click(View view) {
         Intent intent = new Intent(this, HighScores.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
         buttonClickSound.start();
     }
 

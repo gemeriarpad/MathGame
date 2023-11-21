@@ -20,8 +20,17 @@ public class Help extends AppCompatActivity {
             public void onClick(View view) {
                 buttonClickSound.start();
                 finish();
+                overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        buttonClickSound.start();
+        finish();
+        overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
+        super.onBackPressed();
+    }
+
 
 }

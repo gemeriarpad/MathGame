@@ -1,5 +1,6 @@
 package com.example.mathgame;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,12 +26,15 @@ public class HighScores extends AppCompatActivity {
     private DataAdapter adapter;
     private DatabaseReference databaseReference;
     Button backButton;
+
+    private MediaPlayer buttonClickSound;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_scores);
         recyclerView = findViewById(R.id.recyclerView);
         backButton = findViewById(R.id.btnBack);
+        buttonClickSound = MediaPlayer.create(this, R.raw.buttonclick);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Replace "your_data_node" with the actual path to your data
@@ -45,9 +49,12 @@ public class HighScores extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buttonClickSound.start();
                 finish();
+                overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
             }
         });
+
     }
 
     private void fetchDataFromFirebase() {
@@ -74,4 +81,12 @@ public class HighScores extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        buttonClickSound.start();
+        finish();
+        overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
+        super.onBackPressed();
+    }
+
 }

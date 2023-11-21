@@ -11,9 +11,10 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/minecraft_font"
             android:layout_height="wrap_content"
             android:text="Back" />
     </LinearLayout>

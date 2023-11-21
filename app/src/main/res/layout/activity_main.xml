@@ -7,10 +7,7 @@
     android:gravity="left|center_vertical"
     android:orientation="horizontal"
 
-    tools:context=".StartMenu"><![CDATA[
-    >
-
-    ]]>
+    tools:context=".StartMenu">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -20,31 +17,40 @@
         android:orientation="vertical">
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/minecraft_font"
             android:onClick="onButton1Click"
+            android:padding="10dp"
             android:soundEffectsEnabled="false"
             android:text="Start" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/button1"
             android:layout_marginTop="16dp"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/minecraft_font"
             android:onClick="onButton2Click"
+            android:padding="10dp"
             android:soundEffectsEnabled="false"
             android:text="Help" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/button2"
             android:layout_marginTop="16dp"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/minecraft_font"
             android:onClick="onButton3Click"
+            android:padding="10dp"
             android:soundEffectsEnabled="false"
             android:text="High Scores" />
 
@@ -55,19 +61,25 @@
             android:layout_below="@id/topRightLayout"
             android:orientation="vertical">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/muteSoundButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:background="@drawable/button_border"
+                android:fontFamily="@font/minecraft_font"
+                android:padding="10dp"
                 android:soundEffectsEnabled="false"
                 android:text="Mute Sound" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/muteMusicButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:background="@drawable/button_border"
+                android:fontFamily="@font/minecraft_font"
+                android:padding="10dp"
                 android:soundEffectsEnabled="false"
                 android:text="Music ON" />
         </LinearLayout>

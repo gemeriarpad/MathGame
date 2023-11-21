@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="fill"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -16,77 +15,176 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:background="#DDDDDD"
+            android:background="@drawable/button"
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/countdownTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|center_horizontal"
-                android:text="CountDownText"
-                android:textAlignment="center"
-
-                android:textSize="24sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/solvedTasks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:layout_weight="0.75"
+                android:orientation="vertical"
+                android:paddingLeft="15sp"
+                android:paddingTop="20sp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/currentTask"
+                        android:id="@+id/levelTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="24sp" />
+                        android:fontFamily="@font/minecraft_font"
+                        android:gravity="center"
+                        android:text="Level: "
+                        android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/currentTaskResult"
+                        android:id="@+id/levelCounterTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="24sp" />
-
+                        android:fontFamily="@font/minecraft_font"
+                        android:text="0"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/nextTasks"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/scoreTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/minecraft_font"
+                        android:gravity="center"
+                        android:text="Score: "
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/scoreCounterTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/minecraft_font"
+                        android:text="0"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/remainingTimeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/minecraft_font"
+                        android:text="Remaining time: " />
+
+                    <TextView
+                        android:id="@+id/remainingTimeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/minecraft_font"
+                        android:gravity="end" />
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/remainingTimeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Remaining time: " />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/remainingTimeValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:scrollbars="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:gravity="bottom|center_horizontal"
+                        android:orientation="vertical"
+                        android:scrollbars="vertical">
+
+                        <TextView
+                            android:id="@+id/solvedTasks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/minecraft_font"
+                            android:gravity="bottom" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/countdownTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/minecraft_font"
+                            android:gravity="center|center_horizontal"
+                            android:text="CountDownText"
+
+                            android:textAlignment="center"
+
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/currentTask"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/minecraft_font"
+                            android:text=""
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/currentTaskResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/minecraft_font"
+                            android:text=""
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:gravity="center_horizontal|top"
+                        android:orientation="vertical"
+                        android:scrollbars="vertical">
+
+                        <TextView
+                            android:id="@+id/nextTasks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/minecraft_font" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -95,73 +193,30 @@
             android:id="@+id/right"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:layout_weight="0.7"
+            android:background="@drawable/button"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
             <!-- Jobb oldal felső rész: Megállítás gomb és Jelenlegi szint -->
             <LinearLayout
                 android:id="@+id/topRightLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="#EEEEEE"
                 android:orientation="vertical">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/stopGameButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Stop Game"
-                    android:soundEffectsEnabled="false"/>
-
-                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/levelTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Level: " />
-
-                        <TextView
-                            android:id="@+id/levelCounterTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/scoreTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Score: " />
-
-                        <TextView
-                            android:id="@+id/scoreCounterTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/minecraft_font"
+                    android:padding="5dp"
+                    android:soundEffectsEnabled="false"
+                    android:text="Stop Game"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -175,29 +230,43 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
-                        android:text="1"
-                        android:soundEffectsEnabled="false"/>
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="10dp"
+                        android:soundEffectsEnabled="false"
+                        android:text="1" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="2"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="3"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -205,29 +274,43 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
-                        android:text="4"
-                        android:soundEffectsEnabled="false"/>
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="10dp"
+                        android:soundEffectsEnabled="false"
+                        android:text="4" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="5"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="6"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -235,29 +318,44 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="7"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="8"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="9"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -265,21 +363,31 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/num0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="0"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/numC"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
                         android:layout_weight="0.3"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="@font/minecraft_font"
+                        android:padding="5dp"
+                        android:soundEffectsEnabled="false"
                         android:text="C"
-                        android:soundEffectsEnabled="false"/>
+                        android:textSize="10sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -291,25 +399,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/topRightLayout"
-                android:background="#EEEEEE"
                 android:orientation="horizontal">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/muteSoundButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
                     android:layout_weight="0.5"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/minecraft_font"
+                    android:padding="5dp"
+                    android:soundEffectsEnabled="false"
                     android:text="Mute Sound"
-                    android:soundEffectsEnabled="false"/>
+                    android:textSize="10sp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/muteMusicButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:layout_margin="2dp"
                     android:layout_weight="0.5"
+
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/minecraft_font"
+                    android:padding="5dp"
+                    android:soundEffectsEnabled="false"
                     android:text="Music ON"
-                    android:soundEffectsEnabled="false"/>
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
 
