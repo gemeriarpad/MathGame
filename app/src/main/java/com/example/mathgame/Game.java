@@ -30,7 +30,7 @@ import java.util.Random;
 public class Game extends AppCompatActivity {
     private MediaPlayer backgroundMusic, buttonClickSound, correctAnswer, incorrectAnswer;
     private static final long COUNTDOWN_TIME = 4000;
-    private long REMAINING_TIME = 10000;
+    private long REMAINING_TIME = 15000;
 
     private Handler remainingTimer;
     private CountDownTimer countDownTimer;
@@ -40,6 +40,7 @@ public class Game extends AppCompatActivity {
     private int result, currentTaskId, currentLevel = 1;
     private HashMap<Integer, int[]> nextTasks = new HashMap<>();
 
+    private HashMap<Integer, String> operations = new HashMap<>();
     DatabaseReference HighScoreDB;
     Button Clear,stopMenu,muteSound,muteMusic;
 
@@ -47,6 +48,11 @@ public class Game extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        operations.put(0,"+");
+        operations.put(1,"-");
+        operations.put(2,"*");
+        operations.put(3,"/");
 
         stopMenu = findViewById(R.id.stopGameButton);
         muteSound = findViewById(R.id.muteSoundButton);
@@ -167,7 +173,7 @@ public class Game extends AppCompatActivity {
             @Override
             public void onFinish() {
                 countdownTextView.setText("");
-                generateTasks(5);
+                generateTasks(10);
                 currentTaskId = 0;
                 nextTask();
             }
@@ -202,11 +208,81 @@ public class Game extends AppCompatActivity {
     }
 
     private void generateTasks(int count){
-        REMAINING_TIME = 10000;
-        for(int i = 0; i < count; i++){
-            int firstNumber = generateRandomNumber(1,10);
-            int secondNumber = generateRandomNumber(1,10);
-            nextTasks.put(i,new int[] {firstNumber, secondNumber});
+        REMAINING_TIME = 15000 - (100 * currentLevel);
+        for(int i = 0; i < count; i++) {
+            int firstNumber = generateRandomNumber(1, 10 + (1 * currentLevel));
+            int secondNumber = generateRandomNumber(1, 10 + (1 * currentLevel));
+            switch (currentLevel) {
+                case 1: { // +
+                    nextTasks.put(i, new int[]{firstNumber, secondNumber, 0});
+                    break;
+                }
+                case 2: { // -
+                    nextTasks.put(i, new int[]{firstNumber, secondNumber, 1});
+                    break;
+                }
+                case 3: { // *
+                    if(firstNumber > 10){
+                        firstNumber = generateRandomNumber(0,10);
+                    }
+                    if(secondNumber > 10){
+                        secondNumber = generateRandomNumber(0,10);
+                    }
+                    nextTasks.put(i, new int[]{firstNumber, secondNumber, 2});
+                    break;
+                }
+                case 4: { // /
+                    if(firstNumber > 10){
+                        firstNumber = generateRandomNumber(0,10);
+                    }
+                    if(secondNumber > 10){
+                        secondNumber = generateRandomNumber(0,10);
+                    }
+                    int tempResult = firstNumber * secondNumber;
+                    nextTasks.put(i, new int []{tempResult, secondNumber, 3});
+                    break;
+                }
+                case 5: { // + -
+                    nextTasks.put(i, new int[]{firstNumber, secondNumber, generateRandomNumber(0,1)});
+                    break;
+                }
+                case 6: { // * /
+                    int randomNum = generateRandomNumber(0, 3);
+                    if(randomNum >= 2 ){
+                        if(firstNumber > 10){
+                            firstNumber = generateRandomNumber(0,10);
+                        }
+                        if(secondNumber > 10){
+                            secondNumber = generateRandomNumber(0,10);
+                        }
+                    }
+                    if(randomNum == 3 ){
+                        int tempResult = firstNumber * secondNumber;
+                        nextTasks.put(i, new int []{tempResult, secondNumber, 3});
+                    }else {
+                        nextTasks.put(i, new int[]{firstNumber, secondNumber, randomNum});
+                    }
+                    break;
+                }
+                default :{ // + - * /
+                    int randomNum = generateRandomNumber(0, 3);
+                    if(randomNum >= 2 ){
+                        if(firstNumber > 10){
+                            firstNumber = generateRandomNumber(0,10);
+                        }
+                        if(secondNumber > 10){
+                            secondNumber = generateRandomNumber(0,10);
+                        }
+                    }
+                    if(randomNum == 3 ){
+                        int tempResult = firstNumber * secondNumber;
+                        nextTasks.put(i, new int []{tempResult, secondNumber, 3});
+                    }else {
+                        nextTasks.put(i, new int[]{firstNumber, secondNumber, randomNum});
+                    }
+                    break;
+                }
+            };
         }
         startRemainingTime();
     }
@@ -216,24 +292,99 @@ public class Game extends AppCompatActivity {
             //End of the level
             currentTaskResultTextView.setText("");
             currentTaskTextView.setText("");
-            Toast.makeText(this, "Level " + Integer.toString(currentLevel) + "completed", Toast.LENGTH_SHORT).show();
+            int bonusPoint = (int) Math.ceil(REMAINING_TIME / 50);
+            scoreTextView.setText(Integer.toString(Integer.parseInt(scoreTextView.getText().toString()) +bonusPoint));
+            Toast.makeText(this, "Level " + Integer.toString(currentLevel) + "completed \n U made " + bonusPoint + " in bonus points!", Toast.LENGTH_SHORT).show();
             remainingTimer.removeCallbacksAndMessages(null);
+
             //On pupup screen to continue
             currentLevel++;
             levelCounterTextView.setText(Integer.toString(currentLevel));
-            generateTasks(10);
+            generateTasks(10 );
             currentTaskId = 0;
             nextTask();
             solvedTasksText.clear();
         }else{
             int firstNumber = nextTasks.get(currentTaskId)[0];
             int secondNumber = nextTasks.get(currentTaskId)[1];
-            result =  firstNumber + secondNumber;
+            int operationId = nextTasks.get(currentTaskId)[2];
+            String operationString = "";
             currentTaskResultTextView.setText("");
-            currentTaskTextView.setText(firstNumber + " + " + secondNumber + " = ");
+
+            switch (operationId){
+                case 0 : {
+                    operationString = "+";
+                    result = firstNumber + secondNumber;
+                    break;
+                }
+                case 1 : {
+                    operationString = "-";
+                    if(secondNumber > firstNumber){
+                        int temp = firstNumber;
+                        firstNumber = secondNumber;
+                        secondNumber = temp;
+                    }
+                    result = firstNumber - secondNumber;
+                    break;
+                }
+                case 2 : {
+                    operationString = "*";
+                    if(firstNumber > 10){
+                        firstNumber = generateRandomNumber(0,10);
+                    }
+                    if(secondNumber > 10){
+                        secondNumber = generateRandomNumber(0,10);
+                    }
+                    nextTasks.put(currentTaskId, new int []{firstNumber, secondNumber, 2});
+                    result = firstNumber * secondNumber;
+                    break;
+                }
+                case 3 : {
+                    operationString = "/";
+                    result = firstNumber / secondNumber ;
+                    break;
+                }
+                default:{
+                    break;
+                }
+            }
+            currentTaskTextView.setText(firstNumber + " " + operationString + " " + secondNumber + " = ");
             nextTaskTextView.setText("");
             for(int i = currentTaskId + 1; i < nextTasks.size();i++){
-                nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " + " + nextTasks.get(i)[1] + " = ");
+                switch (nextTasks.get(i)[2]){
+                    case 0:{
+                        operationString = "+";
+                        nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
+                        break;
+                    }
+                    case 1:{
+                        operationString = "-";
+                        int tempFirstNum = nextTasks.get(i)[0];
+                        int tempSecondNum = nextTasks.get(i)[1];
+                        if(tempFirstNum < tempSecondNum){
+                            int temp = tempFirstNum;
+                            tempFirstNum = tempSecondNum;
+                            tempSecondNum = temp;
+                        }
+                        nextTaskTextView.append("\n" + tempFirstNum + " " + operationString + " " + tempSecondNum + " = ");
+                        break;
+                    }
+                    case 2:{
+                        operationString = "*";
+                        nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
+                        break;
+                    }
+                    case 3:{
+                        operationString = "/";
+                        nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
+                        break;
+                    }
+                    default:{
+                        nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
+                        break;
+                    }
+                }
+
             }
         }
     }

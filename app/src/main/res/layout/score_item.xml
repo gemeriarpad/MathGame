@@ -1,20 +1,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_margin="10sp"
+    android:background="@drawable/button_border"
+    android:orientation="horizontal"
     android:padding="16dp">
 
     <TextView
         android:id="@+id/textUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username" />
+        android:layout_marginRight="20sp"
+        android:fontFamily="@font/minecraft_font"
+        android:text="Username"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score" />
+        android:layout_marginRight="20sp"
+        android:fontFamily="@font/minecraft_font"
+        android:text="Score"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/minecraft_font"
+        android:text="Date"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
     <!-- Add more TextViews or UI elements as needed -->
 
