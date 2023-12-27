@@ -1,24 +1,18 @@
 package com.example.mathgame;
 
-import android.content.Context;
-import android.media.MediaPlayer;
-
 public class global {
-    public MediaPlayer backgroundMusic, buttonClickSound, correctAnswer, incorrectAnswer;
     public static boolean music = true;
     public static boolean sounds = true;
+//    continue level
+    private int level = 1;
+    private int score = 0;
+    private int solvedTasks = 0;
 
-    public void musicSwitch(){
-        music = !music;
+    public int getLevel() {
+        return level;
     }
-
-    public void soundsSwitch(){
-        sounds = !sounds;
-    }
-
-    public global(Context context){
-        backgroundMusic = MediaPlayer.create(context, R.raw.backgronudmusic);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0.5f, 0.5f);
+    public void setLevel(int level) {
+        // Add custom logic if needed
+        this.level = level;
     }
 }

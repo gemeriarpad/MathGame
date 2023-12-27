@@ -2,6 +2,7 @@ package com.example.mathgame;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -14,6 +15,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Random;
 public class Game extends AppCompatActivity {
+    private global GlobalVariables;
     private MediaPlayer backgroundMusic, buttonClickSound, correctAnswer, incorrectAnswer;
     private static final long COUNTDOWN_TIME = 4000;
     private long REMAINING_TIME = 15000;
@@ -42,7 +45,7 @@ public class Game extends AppCompatActivity {
 
     private HashMap<Integer, String> operations = new HashMap<>();
     DatabaseReference HighScoreDB;
-    Button Clear,stopMenu,muteSound,muteMusic;
+    Button Clear,stopMenu,muteSound,muteMusic, continueBtn, backToMainMenuBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class Game extends AppCompatActivity {
         stopMenu = findViewById(R.id.stopGameButton);
         muteSound = findViewById(R.id.muteSoundButton);
         muteMusic = findViewById(R.id.muteMusicButton);
+
 
         //music
         backgroundMusic = MediaPlayer.create(this, R.raw.backgronudmusic);
@@ -105,6 +109,50 @@ public class Game extends AppCompatActivity {
                 }
             });
         }
+
+        // Popup menu
+        stopMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//               Stop the timer
+                if (remainingTimer != null) {
+                    remainingTimer.removeCallbacksAndMessages(null);
+                }
+
+                final Dialog dialog = new Dialog(Game.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+
+                dialog.setContentView(R.layout.popup_meu);
+                dialog.show();
+                continueBtn = dialog.findViewById(R.id.btnContinue);
+                backToMainMenuBtn = dialog.findViewById(R.id.btnBackToMenu);
+
+                continueBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                backToMainMenuBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                        global.currentLevel = currentLevel;
+////                        global.score = Integer.parseInt(scoreTextView.getText().toString());
+//                        global.solvedTasks = 3;
+//                        Toast.makeText(Game.this, GlobalVariables.getLevel(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        startRemainingTime();
+                    }
+                });
+            }
+
+        });
 
         muteMusic.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "444164425679",
+    "firebase_url": "https://mathgame-a2c9c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mathgame-a2c9c",
+    "storage_bucket": "mathgame-a2c9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444164425679:android:b64be997367e31bcf7f4ba",
+        "android_client_info": {
+          "package_name": "com.example.mathgame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdggtKC3V1nJCf6r7I5nBiuTjD2ULjXmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
