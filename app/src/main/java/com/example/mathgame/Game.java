@@ -138,10 +138,9 @@ public class Game extends AppCompatActivity {
                 backToMainMenuBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        global.currentLevel = currentLevel;
-////                        global.score = Integer.parseInt(scoreTextView.getText().toString());
-//                        global.solvedTasks = 3;
-//                        Toast.makeText(Game.this, GlobalVariables.getLevel(), Toast.LENGTH_SHORT).show();
+                       buttonClickSound.start();
+                       finish();
+                       overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
                     }
                 });
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -397,6 +396,7 @@ public class Game extends AppCompatActivity {
                 }
             }
             currentTaskTextView.setText(firstNumber + " " + operationString + " " + secondNumber + " = ");
+            //
             nextTaskTextView.setText("");
             for(int i = currentTaskId + 1; i < nextTasks.size();i++){
                 switch (nextTasks.get(i)[2]){
@@ -432,7 +432,7 @@ public class Game extends AppCompatActivity {
                         break;
                     }
                 }
-
+    //
             }
         }
     }
