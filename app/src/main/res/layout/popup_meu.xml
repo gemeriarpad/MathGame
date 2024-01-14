@@ -5,22 +5,37 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@android:color/transparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10sp"
 
-    <Button
+    >
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinue"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:layout_weight="0.5"
+
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/minecraft_font"
+        android:padding="5dp"
+        android:soundEffectsEnabled="false"
         android:text="Continue"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="46dp" />
+        android:textSize="10sp" />
 
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackToMenu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Main menu"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="102dp" />
+        android:layout_margin="2dp"
+        android:layout_weight="0.5"
 
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/minecraft_font"
+        android:padding="5dp"
+        android:soundEffectsEnabled="false"
+        android:text="Back To Menu"
+        android:textSize="10sp" />
 </LinearLayout>

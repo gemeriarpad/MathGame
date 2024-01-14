@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Random;
+
 public class Game extends AppCompatActivity {
     private global GlobalVariables;
     private MediaPlayer backgroundMusic, buttonClickSound, correctAnswer, incorrectAnswer;
@@ -45,17 +46,17 @@ public class Game extends AppCompatActivity {
 
     private HashMap<Integer, String> operations = new HashMap<>();
     DatabaseReference HighScoreDB;
-    Button Clear,stopMenu,muteSound,muteMusic, continueBtn, backToMainMenuBtn;
+    Button Clear, stopMenu, muteSound, muteMusic, continueBtn, backToMainMenuBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        operations.put(0,"+");
-        operations.put(1,"-");
-        operations.put(2,"*");
-        operations.put(3,"/");
+        operations.put(0, "+");
+        operations.put(1, "-");
+        operations.put(2, "*");
+        operations.put(3, "/");
 
         stopMenu = findViewById(R.id.stopGameButton);
         muteSound = findViewById(R.id.muteSoundButton);
@@ -73,7 +74,7 @@ public class Game extends AppCompatActivity {
         incorrectAnswer = MediaPlayer.create(this, R.raw.incorrectanswer);
         checkMusicAndSounds();
 
-         Clear = findViewById(R.id.numC);
+        Clear = findViewById(R.id.numC);
 
         countdownTextView = findViewById(R.id.countdownTextView);
         startCountdown();
@@ -94,9 +95,9 @@ public class Game extends AppCompatActivity {
             numButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(countdownTextView.getText() == "") {
+                    if (countdownTextView.getText() == "") {
                         onNumberButtonClick(((Button) v).getText().toString());
-                    }else{
+                    } else {
                         buttonClickSound.start();
                     }
                 }
@@ -105,7 +106,7 @@ public class Game extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     buttonClickSound.start();
-                   currentTaskResultTextView.setText("");
+                    currentTaskResultTextView.setText("");
                 }
             });
         }
@@ -114,6 +115,7 @@ public class Game extends AppCompatActivity {
         stopMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buttonClickSound.start();
 //               Stop the timer
                 if (remainingTimer != null) {
                     remainingTimer.removeCallbacksAndMessages(null);
@@ -132,15 +134,16 @@ public class Game extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
+                        buttonClickSound.start();
                     }
                 });
 
                 backToMainMenuBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       buttonClickSound.start();
-                       finish();
-                       overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
+                        buttonClickSound.start();
+                        finish();
+                        overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
                     }
                 });
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -180,7 +183,7 @@ public class Game extends AppCompatActivity {
     private void onNumberButtonClick(String number) {
         currentTaskResultTextView.append(number);
         buttonClickSound.start();
-        if(Integer.toString(result).length() == currentTaskResultTextView.getText().length()){
+        if (Integer.toString(result).length() == currentTaskResultTextView.getText().length()) {
             if (result == Integer.parseInt(currentTaskResultTextView.getText().toString())) {
                 //Correct answer
                 scoreTextView.setText(Integer.toString(Integer.parseInt(scoreTextView.getText().toString()) + 100));
@@ -216,6 +219,7 @@ public class Game extends AppCompatActivity {
                 long secondsUntilFinished = millisUntilFinished / 1000;
                 countdownTextView.setText(String.valueOf(secondsUntilFinished));
             }
+
             //After the countdown
             @Override
             public void onFinish() {
@@ -228,14 +232,14 @@ public class Game extends AppCompatActivity {
     }
 
 
-    private void startRemainingTime(){
+    private void startRemainingTime() {
         remainingTimer = new Handler();
         remainingTimer.postDelayed(new Runnable() {
             @Override
             public void run() {
                 long secondsRemaining = REMAINING_TIME / 1000;
                 long milisecondsRemaining = REMAINING_TIME % 1000;
-                remainingTimeValue.setText(String.valueOf(secondsRemaining) + "."+String.valueOf(milisecondsRemaining / 100));
+                remainingTimeValue.setText(String.valueOf(secondsRemaining) + "." + String.valueOf(milisecondsRemaining / 100));
                 remainingTimer.postDelayed(this, 100);
                 REMAINING_TIME -= 100;
 
@@ -247,16 +251,16 @@ public class Game extends AppCompatActivity {
                 }
             }
         }, 0);
-}
+    }
 
     private static int generateRandomNumber(int minValue, int maxValue) {
         Random random = new Random();
         return random.nextInt((maxValue - minValue) + 1) + minValue;
     }
 
-    private void generateTasks(int count){
-        REMAINING_TIME = 15000 - (100 * currentLevel);
-        for(int i = 0; i < count; i++) {
+    private void generateTasks(int count) {
+        REMAINING_TIME = 30000 - (100 * currentLevel);
+        for (int i = 0; i < count; i++) {
             int firstNumber = generateRandomNumber(1, 10 + (1 * currentLevel));
             int secondNumber = generateRandomNumber(1, 10 + (1 * currentLevel));
             switch (currentLevel) {
@@ -269,104 +273,105 @@ public class Game extends AppCompatActivity {
                     break;
                 }
                 case 3: { // *
-                    if(firstNumber > 10){
-                        firstNumber = generateRandomNumber(0,10);
+                    if (firstNumber > 10) {
+                        firstNumber = generateRandomNumber(0, 10);
                     }
-                    if(secondNumber > 10){
-                        secondNumber = generateRandomNumber(0,10);
+                    if (secondNumber > 10) {
+                        secondNumber = generateRandomNumber(0, 10);
                     }
                     nextTasks.put(i, new int[]{firstNumber, secondNumber, 2});
                     break;
                 }
                 case 4: { // /
-                    if(firstNumber > 10){
-                        firstNumber = generateRandomNumber(0,10);
+                    if (firstNumber > 10) {
+                        firstNumber = generateRandomNumber(0, 10);
                     }
-                    if(secondNumber > 10){
-                        secondNumber = generateRandomNumber(0,10);
+                    if (secondNumber > 10) {
+                        secondNumber = generateRandomNumber(0, 10);
                     }
                     int tempResult = firstNumber * secondNumber;
-                    nextTasks.put(i, new int []{tempResult, secondNumber, 3});
+                    nextTasks.put(i, new int[]{tempResult, secondNumber, 3});
                     break;
                 }
                 case 5: { // + -
-                    nextTasks.put(i, new int[]{firstNumber, secondNumber, generateRandomNumber(0,1)});
+                    nextTasks.put(i, new int[]{firstNumber, secondNumber, generateRandomNumber(0, 1)});
                     break;
                 }
                 case 6: { // * /
                     int randomNum = generateRandomNumber(0, 3);
-                    if(randomNum >= 2 ){
-                        if(firstNumber > 10){
-                            firstNumber = generateRandomNumber(0,10);
+                    if (randomNum >= 2) {
+                        if (firstNumber > 10) {
+                            firstNumber = generateRandomNumber(0, 10);
                         }
-                        if(secondNumber > 10){
-                            secondNumber = generateRandomNumber(0,10);
+                        if (secondNumber > 10) {
+                            secondNumber = generateRandomNumber(0, 10);
                         }
                     }
-                    if(randomNum == 3 ){
+                    if (randomNum == 3) {
                         int tempResult = firstNumber * secondNumber;
-                        nextTasks.put(i, new int []{tempResult, secondNumber, 3});
-                    }else {
+                        nextTasks.put(i, new int[]{tempResult, secondNumber, 3});
+                    } else {
                         nextTasks.put(i, new int[]{firstNumber, secondNumber, randomNum});
                     }
                     break;
                 }
-                default :{ // + - * /
+                default: { // + - * /
                     int randomNum = generateRandomNumber(0, 3);
-                    if(randomNum >= 2 ){
-                        if(firstNumber > 10){
-                            firstNumber = generateRandomNumber(0,10);
+                    if (randomNum >= 2) {
+                        if (firstNumber > 10) {
+                            firstNumber = generateRandomNumber(0, 10);
                         }
-                        if(secondNumber > 10){
-                            secondNumber = generateRandomNumber(0,10);
+                        if (secondNumber > 10) {
+                            secondNumber = generateRandomNumber(0, 10);
                         }
                     }
-                    if(randomNum == 3 ){
+                    if (randomNum == 3) {
                         int tempResult = firstNumber * secondNumber;
-                        nextTasks.put(i, new int []{tempResult, secondNumber, 3});
-                    }else {
+                        nextTasks.put(i, new int[]{tempResult, secondNumber, 3});
+                    } else {
                         nextTasks.put(i, new int[]{firstNumber, secondNumber, randomNum});
                     }
                     break;
                 }
-            };
+            }
+            ;
         }
         startRemainingTime();
     }
 
-    private void nextTask(){
-        if (!nextTasks.containsKey(currentTaskId)){
+    private void nextTask() {
+        if (!nextTasks.containsKey(currentTaskId)) {
             //End of the level
             currentTaskResultTextView.setText("");
             currentTaskTextView.setText("");
             int bonusPoint = (int) Math.ceil(REMAINING_TIME / 50);
-            scoreTextView.setText(Integer.toString(Integer.parseInt(scoreTextView.getText().toString()) +bonusPoint));
+            scoreTextView.setText(Integer.toString(Integer.parseInt(scoreTextView.getText().toString()) + bonusPoint));
             Toast.makeText(this, "Level " + Integer.toString(currentLevel) + "completed \n U made " + bonusPoint + " in bonus points!", Toast.LENGTH_SHORT).show();
             remainingTimer.removeCallbacksAndMessages(null);
 
             //On pupup screen to continue
             currentLevel++;
             levelCounterTextView.setText(Integer.toString(currentLevel));
-            generateTasks(10 );
+            generateTasks(10);
             currentTaskId = 0;
             nextTask();
             solvedTasksText.clear();
-        }else{
+        } else {
             int firstNumber = nextTasks.get(currentTaskId)[0];
             int secondNumber = nextTasks.get(currentTaskId)[1];
             int operationId = nextTasks.get(currentTaskId)[2];
             String operationString = "";
             currentTaskResultTextView.setText("");
 
-            switch (operationId){
-                case 0 : {
+            switch (operationId) {
+                case 0: {
                     operationString = "+";
                     result = firstNumber + secondNumber;
                     break;
                 }
-                case 1 : {
+                case 1: {
                     operationString = "-";
-                    if(secondNumber > firstNumber){
+                    if (secondNumber > firstNumber) {
                         int temp = firstNumber;
                         firstNumber = secondNumber;
                         secondNumber = temp;
@@ -374,42 +379,42 @@ public class Game extends AppCompatActivity {
                     result = firstNumber - secondNumber;
                     break;
                 }
-                case 2 : {
+                case 2: {
                     operationString = "*";
-                    if(firstNumber > 10){
-                        firstNumber = generateRandomNumber(0,10);
+                    if (firstNumber > 10) {
+                        firstNumber = generateRandomNumber(0, 10);
                     }
-                    if(secondNumber > 10){
-                        secondNumber = generateRandomNumber(0,10);
+                    if (secondNumber > 10) {
+                        secondNumber = generateRandomNumber(0, 10);
                     }
-                    nextTasks.put(currentTaskId, new int []{firstNumber, secondNumber, 2});
+                    nextTasks.put(currentTaskId, new int[]{firstNumber, secondNumber, 2});
                     result = firstNumber * secondNumber;
                     break;
                 }
-                case 3 : {
+                case 3: {
                     operationString = "/";
-                    result = firstNumber / secondNumber ;
+                    result = firstNumber / secondNumber;
                     break;
                 }
-                default:{
+                default: {
                     break;
                 }
             }
             currentTaskTextView.setText(firstNumber + " " + operationString + " " + secondNumber + " = ");
             //
             nextTaskTextView.setText("");
-            for(int i = currentTaskId + 1; i < nextTasks.size();i++){
-                switch (nextTasks.get(i)[2]){
-                    case 0:{
+            for (int i = currentTaskId + 1; i < nextTasks.size(); i++) {
+                switch (nextTasks.get(i)[2]) {
+                    case 0: {
                         operationString = "+";
                         nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
                         break;
                     }
-                    case 1:{
+                    case 1: {
                         operationString = "-";
                         int tempFirstNum = nextTasks.get(i)[0];
                         int tempSecondNum = nextTasks.get(i)[1];
-                        if(tempFirstNum < tempSecondNum){
+                        if (tempFirstNum < tempSecondNum) {
                             int temp = tempFirstNum;
                             tempFirstNum = tempSecondNum;
                             tempSecondNum = temp;
@@ -417,27 +422,27 @@ public class Game extends AppCompatActivity {
                         nextTaskTextView.append("\n" + tempFirstNum + " " + operationString + " " + tempSecondNum + " = ");
                         break;
                     }
-                    case 2:{
+                    case 2: {
                         operationString = "*";
                         nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
                         break;
                     }
-                    case 3:{
+                    case 3: {
                         operationString = "/";
                         nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
                         break;
                     }
-                    default:{
+                    default: {
                         nextTaskTextView.append("\n" + nextTasks.get(i)[0] + " " + operationString + " " + nextTasks.get(i)[1] + " = ");
                         break;
                     }
                 }
-    //
+                //
             }
         }
     }
 
-// End of the counter
+    // End of the counter
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -463,9 +468,9 @@ public class Game extends AppCompatActivity {
         builder.setView(dialogView);
         builder.setPositiveButton("Submit my score", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Log.d(TAG,editText.getText().toString());
+                Log.d(TAG, editText.getText().toString());
 //                Write to database
-                if(editText.getText().toString().length() != 0) {
+                if (editText.getText().toString().length() != 0) {
                     HighScoreDB = FirebaseDatabase.getInstance().getReference("highscores");
                     highscore newScore = new highscore(editText.getText().toString(), Integer.parseInt(scoreTextView.getText().toString()));
                     String userId = HighScoreDB.push().getKey();
@@ -473,7 +478,7 @@ public class Game extends AppCompatActivity {
                     buttonClickSound.start();
                     finish();
                     overridePendingTransition(R.anim.fade_forward, R.anim.fade_back);
-                }else{
+                } else {
                     Toast.makeText(Game.this, "U didnt entered your name...", Toast.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
@@ -497,30 +502,31 @@ public class Game extends AppCompatActivity {
         dialog.show();
     }
 
-    private void checkMusicAndSounds(){
-        if(global.sounds){
-            buttonClickSound.setVolume(0.5f,0.5f);
-            correctAnswer.setVolume(0.5f,0.5f);
-            incorrectAnswer.setVolume(0.5f,0.5f);
+    private void checkMusicAndSounds() {
+        if (global.sounds) {
+            buttonClickSound.setVolume(0.5f, 0.5f);
+            correctAnswer.setVolume(0.5f, 0.5f);
+            incorrectAnswer.setVolume(0.5f, 0.5f);
             muteSound.setText("Sounds ON");
-        }else{
-            buttonClickSound.setVolume(0f,0f);
-            correctAnswer.setVolume(0f,0f);
-            incorrectAnswer.setVolume(0f,0f);
+        } else {
+            buttonClickSound.setVolume(0f, 0f);
+            correctAnswer.setVolume(0f, 0f);
+            incorrectAnswer.setVolume(0f, 0f);
             muteSound.setText("Sounds OFF");
         }
 
-        if(global.music){
-            if(!backgroundMusic.isPlaying()) {
+        if (global.music) {
+            if (!backgroundMusic.isPlaying()) {
                 backgroundMusic.start();
             }
             muteMusic.setText("Music ON");
-        }else{
+        } else {
             backgroundMusic.pause();
             muteMusic.setText("Music OFF");
         }
     }
-    private void resetLeftLayout(){
+
+    private void resetLeftLayout() {
         currentLevel = 1;
         levelCounterTextView.setText(Integer.toString(currentLevel));
         scoreTextView.setText("0");
