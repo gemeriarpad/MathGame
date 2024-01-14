@@ -147,7 +147,7 @@
 
                             android:textAlignment="center"
 
-                            android:textSize="24sp" />
+                            android:textSize="34sp" />
 
                         <TextView
                             android:id="@+id/currentTask"
@@ -155,7 +155,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/minecraft_font"
                             android:text=""
-                            android:textSize="30sp"
+                            android:textSize="34sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/minecraft_font"
                             android:text=""
-                            android:textSize="30sp"
+                            android:textSize="34sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
